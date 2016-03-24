@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ object.title }}{% endblock title %}
+
+{% block content %}
+<div class="container">
+  <h4><strong>Title: </strong>{{ object.title }}</h4>
+  <h5><strong>Question: </strong>{{ object.body }}</h5>
+  <p><strong>Tags: </strong>{% for tag in object.tags.all %} {{ tag }} {% endfor %}</p>
+  <p><strong>Posted By: </strong>{{ object.user.username }}</p>
+  <em><strong>Created: </strong>{{ object.created }}</em>
+  <br><br>
+  <a href="{% url 'questions_list' %}" class="waves-effect waves-light btn">Go Back</a>
+  <br><br>
+  <h4>Answers</h4>
+  {% if object.answers.all %}
+  <p>{% for answer in object.answers.all %} {{ answer.response | linebreaks }} <a href="{% url 'upvote' object.id answer.id  %}">
+    Up Vote</a> <a href="{% url 'downvote' object.id answer.id %}">Down Vote</a> {{ answer.like | linebreaks }}
+  <em>Posted By: <strong>{{ answer.user.username }}</strong> at {{ answer.created }}</em><br><br><br>{% endfor %}</p>
+  {% else %}
+    <h5>No answers have been given yet, Be the first to answer!</h5>
+  {% endif %}
+  <br><br><br>
+  <form method="post" action="{% url 'create_answer' object.id %}">
+    {% csrf_token %}
+    {{ form }}
+    <br><br>
+    <input type="submit" value="Post Answer!" class="waves-effect waves-light btn">
+  </form>
+</div>
+{% endblock %}

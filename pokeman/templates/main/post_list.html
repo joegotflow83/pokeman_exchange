@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Questions{% endblock title %}
+
+{% block content %}
+<div class="container">
+  <h3>Questions:</h3>
+  <ul>
+  {% for question in post_list %}
+    <li><h4><a href="{% url 'question_detail' question.id %}">{{question.title}}</a></h4></li>
+  {% endfor %}
+  <ul>
+</div>
+{% endblock %}

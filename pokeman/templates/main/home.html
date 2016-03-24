@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+<div class="container">
+  <h3>Welcome back {{ user }}</h3>
+  {% if user.userprofile.profile_pic %}
+    <img class="img" src="{{ user.userprofile.profile_pic.url }}" height="220" width="220">
+  {% endif %}
+  <h4>Your current score is {{ request.user.userprofile.score }}</h4>
+  <br><br>
+  <a href="{% url 'create_post' %}" class="waves-effect waves-light btn">Create Post</a>
+</div>
+<style>
+  .img {
+    width: 220px;
+    height: 220px;
+    -webkit-border-radius: 195px;
+    -moz-border-radius: 195px;
+    border-radius: 195px;
+    background: red;
+  }
+</style>
+{% endblock %}

@@ -5,6 +5,7 @@ from django.views.generic.edit import CreateView, DeleteView
 from django.core.urlresolvers import reverse, reverse_lazy
 from rest_framework.authtoken.models import Token
 import requests
+import stripe
 
 from .models import Post, Answer, Vote
 from .forms import AnswerForm
@@ -35,6 +36,10 @@ class CreateQuestion(CreateView):
 
     def form_valid(self, form):
         """Validate the form"""
+        user_posts = Post.objects.filter(user=self.request.user)
+        print(user_posts.count())
+        if user_posts.count() > 3:
+            return render(self.request, 'error/error.html')
         new_post = form.save(commit=False)
         new_post.user = self.request.user
         new_post.save()
@@ -155,3 +160,28 @@ class SearchQuestion(TemplateView):
         questions = Post.objects.filter(tags__name=search)
         context['questions'] = questions
         return context
+
+
+class Charge(View):
+    """Confirm charge went through"""
+    def post(self, request):
+        stripe_keys = {
+            'secret_key': 'sk_test_rt2Qf6UZcub65Rc5sdS7OPlY',
+            'publishable_key': 'pk_test_u5nWdGCYlT5YVAqnf5R38cgX'
+        }
+
+        stripe.api_key = stripe_keys['secret_key']
+        amount = 1000
+
+        customer = stripe.Customer.create(
+            email=request.POST["stripeEmail"],
+            card=request.POST['stripeToken']
+        )
+
+        charge = stripe.Charge.create(
+            customer=customer.id,
+            amount=amount,
+            currency="usd",
+            description="Unlimited Questions"
+        )
+        return render(request, 'main/charge.html')

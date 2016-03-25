@@ -18,7 +18,7 @@ class Signup(CreateView):
         new_user.user = self.request.user
         new_user.save()
         UserProfile.objects.create(user=new_user, profile_pic=form.cleaned_data['profile_pic'])
-        Token.objects.create(user=self.request.user.id)
+        Token.objects.create(user=new_user)
         return super().form_valid(form)
 
     def get_success_url(self):

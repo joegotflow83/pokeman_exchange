@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^delete/post/(?P<pk>\d+)/$', views.DeleteQuestion.as_view(), name='delete_question'),
     url(r'^pokemon/search/$', views.Pokemon.as_view(), name='pokemon_search'),
     url(r'^search/question/$', views.SearchQuestion.as_view(), name='search_question'),
+    url(r'^charge/$', views.Charge.as_view(), name='charge'),
 ]

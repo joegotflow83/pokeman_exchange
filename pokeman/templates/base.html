@@ -4,11 +4,12 @@
     <title>{% block title %}{% endblock title %}</title>
     <!-- Imports -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   </head>
   <body>
     <nav>
     <div class="nav-wrapper">
-      <a href="#" class="brand-logo">Pokeman Exchange</a>
+      <a href="" class="brand-logo">Pokeman Exchange</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         {% if user.is_authenticated %}
         <li><a href="{% url 'home' %}">Home</a></li>

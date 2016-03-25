@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Question Search{% endblock title %}
+
+{% block content %}
+<div class="container">
+  <h3>Search a question by its tags</h3>
+  <form method="" action="">
+    <input type="text" name="query" placeholder="Enter tags">
+    <input type="submit" value="Search" class="waves-effect waves-light btn">
+  </form>
+  <br><br>
+  {% for question in questions %}
+  <h4><a href="{% url 'question_detail' question.id %}">{{ question.title }}</a></h4>
+  {% endfor %}
+</div>
+{% endblock %}

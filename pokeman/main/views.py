@@ -4,6 +4,7 @@ from django.views.generic import TemplateView, ListView, DetailView, View
 from django.views.generic.edit import CreateView, DeleteView
 from django.core.urlresolvers import reverse, reverse_lazy
 from rest_framework.authtoken.models import Token
+import requests
 
 from .models import Post, Answer, Vote
 from .forms import AnswerForm
@@ -130,3 +131,27 @@ class DownVote(View):
         answer.user.userprofile.save()
         answer.save()
         return HttpResponseRedirect(url)
+
+
+class Pokemon(TemplateView):
+    """Display pokemon data"""
+    template_name = 'main/pokemon.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        search = self.request.GET.get('search', False)
+        pokemon = requests.get("http://pokeapi.co/api/v2/pokemon/{}".format(search)).content
+        context['pokemon'] = pokemon
+        return context
+
+
+class SearchQuestion(TemplateView):
+    """Allow a user to search for a question by tags"""
+    template_name = 'main/question_search.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        search = self.request.GET.get('query', False)
+        questions = Post.objects.filter(tags__name=search)
+        context['questions'] = questions
+        return context

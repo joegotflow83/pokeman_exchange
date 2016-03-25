@@ -12,7 +12,9 @@
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         {% if user.is_authenticated %}
         <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'pokemon_search' %}">Pokemon</a></li>
         <li><a href="{% url 'questions_list' %}">Questions</a></li>
+        <li><a href="{% url 'search_question' %}">Seach</a></li>
         <li><a href="{% url 'logout' %}">Logout</a></li>
         {% else %}
         <li><a href="sass.html">Index</a></li>

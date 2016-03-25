@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.views.generic.edit import CreateView
 from django.core.urlresolvers import reverse
+from rest_framework.authtoken.models import Token
 
 from .forms import UserForm
 from .models import UserProfile
@@ -17,6 +18,7 @@ class Signup(CreateView):
         new_user.user = self.request.user
         new_user.save()
         UserProfile.objects.create(user=new_user, profile_pic=form.cleaned_data['profile_pic'])
+        Token.objects.create(user=self.request.user.id)
         return super().form_valid(form)
 
     def get_success_url(self):

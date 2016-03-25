@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^', include('main.urls')),
-    url(r'media/(?P<path>.*)/$', serve, {'document_root': MEDIA_ROOT}),
+    url(r'^media/(?P<path>.*)/$', serve, {'document_root': MEDIA_ROOT}),
+    url(r'^api/', include('api.urls')),
 ]

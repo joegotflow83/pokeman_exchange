@@ -1,7 +1,9 @@
+from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView, ListView, DetailView, View
-from django.views.generic.edit import CreateView
-from django.core.urlresolvers import reverse
+from django.views.generic.edit import CreateView, DeleteView
+from django.core.urlresolvers import reverse, reverse_lazy
+from rest_framework.authtoken.models import Token
 
 from .models import Post, Answer, Vote
 from .forms import AnswerForm
@@ -10,6 +12,19 @@ from .forms import AnswerForm
 class Home(TemplateView):
     """Users home page"""
     template_name = 'main/home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['token'] = Token.objects.get(user=self.request.user)
+        context['questions'] = Post.objects.filter(user=self.request.user)
+        return context
+
+
+class GenToken(View):
+    """Generate api tokens for user"""
+    def get(self, request):
+        Token.objects.create(user=request.user)
+        return render(request, 'main/token_creation.html')
 
 
 class CreateQuestion(CreateView):
@@ -29,6 +44,14 @@ class CreateQuestion(CreateView):
 
     def get_success_url(self):
         return reverse('home')
+
+
+class DeleteQuestion(DeleteView):
+    """Allow a user to delete their question"""
+    model = Post
+
+    def get_success_url(self):
+        return reverse_lazy('home')
 
 
 class ListQuestions(ListView):

@@ -1,16 +1,31 @@
 {% extends 'base.html' %}
 
-{% block title %}Login{% endblock title %}
+{% block title %}Home{% endblock title %}
 
 {% block content %}
 <div class="container">
-  <h3>Welcome back {{ user }}</h3>
-  {% if user.userprofile.profile_pic %}
-    <img class="img" src="{{ user.userprofile.profile_pic.url }}" height="220" width="220">
-  {% endif %}
-  <h4>Your current score is {{ request.user.userprofile.score }}</h4>
-  <br><br>
-  <a href="{% url 'create_post' %}" class="waves-effect waves-light btn">Create Post</a>
+  <div class="col-m6">
+    <h3 id="header">Welcome back {{ user }}</h3>
+    {% if token %}
+      <p class="right-align"><strong>API Token: </strong>{{ token }}</p>
+    {% else %}
+      <p>Click here to generate your API Token</p>
+      <a href="{% url 'gen_token' %}" class="waves-effect waves-light btn">Generate Token</a>
+    {% endif %}
+    {% if user.userprofile.profile_pic %}
+      <img class="img" src="{{ user.userprofile.profile_pic.url }}" height="220" width="220">
+    {% endif %}
+    <h4>Your current score is {{ request.user.userprofile.score }}</h4>
+    <br><br>
+    <a href="{% url 'create_post' %}" class="waves-effect waves-light btn">Create Post</a>
+  </div>
+  <div class="col-m6">
+    <h4>Here is a list all the questions you have posted:</h4>
+    {% for question in questions %}
+    <span><h5><a href="{% url 'question_detail' question.id %}">{{ question.title }}</a></h5>
+      <a href="{% url 'delete_question' question.id %}" class="waves-effect waves-light btn">Delete Post</a></span>
+    {% endfor %}
+  </div>
 </div>
 <style>
   .img {

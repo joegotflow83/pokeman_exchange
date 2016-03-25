@@ -11,5 +11,7 @@ urlpatterns = [
     url(r'^question/(?P<pk>\d+)/$', views.QuestionDetail.as_view(), name='question_detail'),
     url(r'^create/answer/(?P<pk>\d+)/$', require_POST(views.CreateAnswer.as_view()), name='create_answer'),
     url(r'^upvote/(?P<pk>\d+)/(?P<answer_id>\d+)/$', views.UpVote.as_view(), name='upvote'),
-    url(r'^downvote(?P<pk>\d+)/(?P<answer_id>\d+)/$', views.DownVote.as_view(), name='downvote'),
+    url(r'^downvote/(?P<pk>\d+)/(?P<answer_id>\d+)/$', views.DownVote.as_view(), name='downvote'),
+    url(r'^generate/token/$', views.GenToken.as_view(), name='gen_token'),
+    url(r'^delete/post/(?P<pk>\d+)/$', views.DeleteQuestion.as_view(), name='delete_question'),
 ]

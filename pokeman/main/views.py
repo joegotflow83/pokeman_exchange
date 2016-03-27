@@ -7,6 +7,7 @@ from rest_framework.authtoken.models import Token
 import requests
 import stripe
 
+from accounts.models import UserProfile
 from .models import Post, Answer, Vote
 from .forms import AnswerForm
 
@@ -24,6 +25,7 @@ class Home(TemplateView):
         context = super().get_context_data(**kwargs)
         context['token'] = Token.objects.get(user=self.request.user)
         context['questions'] = Post.objects.filter(user=self.request.user)
+        context['top_3'] = UserProfile.objects.order_by('-score')[:3]
         return context
 
 

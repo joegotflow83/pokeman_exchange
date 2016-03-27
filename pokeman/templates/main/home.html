@@ -33,6 +33,12 @@
       </div>
       <div class="col m6">
         <br><br>
+        <h4>Here are the top 3 scorers</h3>
+        <ol>
+        {% for user in top_3 %}
+          <li>{{ user.user.username | linebreaks }}</li>
+        {% endfor %}
+        </ol>
         <h4>Here is a list of all the questions you have posted:</h4>
         {% for question in questions %}
         <span><h5><a href="{% url 'question_detail' question.id %}">{{ question.title }}</a></h5>

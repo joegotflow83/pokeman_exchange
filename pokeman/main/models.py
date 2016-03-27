@@ -18,6 +18,9 @@ class Answer(models.Model):
     votes = models.ManyToManyField(Vote)
     created = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['-like']
+
 
 class Post(models.Model):
     user = models.ForeignKey(User)

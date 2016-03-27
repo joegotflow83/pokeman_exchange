@@ -11,6 +11,11 @@ from .models import Post, Answer, Vote
 from .forms import AnswerForm
 
 
+class Index(TemplateView):
+    """First page of web app"""
+    template_name = 'main/index.html'
+
+
 class Home(TemplateView):
     """Users home page"""
     template_name = 'main/home.html'
@@ -20,13 +25,6 @@ class Home(TemplateView):
         context['token'] = Token.objects.get(user=self.request.user)
         context['questions'] = Post.objects.filter(user=self.request.user)
         return context
-
-
-class GenToken(View):
-    """Generate api tokens for user"""
-    def get(self, request):
-        Token.objects.create(user=request.user)
-        return render(request, 'main/token_creation.html')
 
 
 class CreateQuestion(CreateView):
@@ -145,7 +143,7 @@ class Pokemon(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         search = self.request.GET.get('search', False)
-        pokemon = requests.get("http://pokeapi.co/api/v2/pokemon/{}".format(search)).content
+        pokemon = requests.get("http://pokeapi.co/api/v2/pokemon/{}".format(search)).json()
         context['pokemon'] = pokemon
         return context
 
@@ -165,6 +163,9 @@ class SearchQuestion(TemplateView):
 class Charge(View):
     """Confirm charge went through"""
     def post(self, request):
+        user = request.user
+        user.userprofile.paid = True
+        user.userprofile.save()
         stripe_keys = {
             'secret_key': 'sk_test_rt2Qf6UZcub65Rc5sdS7OPlY',
             'publishable_key': 'pk_test_u5nWdGCYlT5YVAqnf5R38cgX'

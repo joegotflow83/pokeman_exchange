@@ -3,12 +3,14 @@
 
 {% block content %}
 <div class="container">
-  <form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <br>
-    <input type="submit" value="Log In!" class="waves-effect waves-light btn">
-  </form>
+  <div class="card red lighten-4">
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <br>
+      <input type="submit" value="Log In!" class="waves-effect waves-light btn">
+    </form>
   <br><br>
+  </div>
 </div>
 {% endblock %}

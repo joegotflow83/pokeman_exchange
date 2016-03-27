@@ -4,12 +4,14 @@
 
 {% block content %}
 <div class="container">
-  <h3>Search for a pokemon, type a number!</h3>
-  <form method="" action="">
-    <input type="text" name="search" placeholder="Enter a number">
-    <input type="submit" value="Search!" class="waves-effect waves-light btn">
-  </form>
+  <div class="card red lighten-4">
+    <h3>Search for a pokemon, type a number!</h3>
+    <form method="" action="">
+      <input type="text" name="search" placeholder="Enter a number">
+      <input type="submit" value="Search!" class="waves-effect waves-light btn">
+    </form>
   <br><br>
   {{ pokemon }}
+  </div>
 </div>
 {% endblock %}

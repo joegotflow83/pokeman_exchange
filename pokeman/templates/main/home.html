@@ -4,37 +4,42 @@
 
 {% block content %}
 <div class="container">
-  <div class="row">
-    <div class="col m6">
-      <h3 id="header">Welcome back {{ user }}</h3>
-      <form action="/charge/" method="post">
-        {% csrf_token %}
-        <script
-          src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-          data-key="pk_test_u5nWdGCYlT5YVAqnf5R38cgX"
-          data-image="https://pokemon-revolution-online.net/PRO.png"
-          data-name="Pokemon Exchange"
-          data-description="unlimited questions"
-          data-amount="2000"
-          data-locale="auto">
-        </script>
-      </form>
-      {% if user.userprofile.profile_pic %}
-        <img class="img" src="{{ user.userprofile.profile_pic.url }}" height="220" width="220">
-      {% endif %}
-      <h4>Your current score is {{ request.user.userprofile.score }}</h4>
-      <br><br>
-      <p><strong>API Token: </strong>{{ token }}</p>
-      <a href="{% url 'create_post' %}" class="waves-effect waves-light btn">Create Post</a>
-    </div>
-    <div class="col m6">
-      <br><br>
-      <h4>Here is a list all the questions you have posted:</h4>
-      {% for question in questions %}
-      <span><h5><a href="{% url 'question_detail' question.id %}">{{ question.title }}</a></h5>
-        <a href="{% url 'delete_question' question.id %}" class="waves-effect waves-light btn">Delete Post</a></span>
+  <div class="card red lighten-4">
+    <div class="row">
+      <div class="col m6">
+        <h3 id="header">Welcome back {{ user }}</h3>
+        {% if user.userprofile.paid %}
+        {% else %}
+        <form action="{% url 'charge' %}" method="post">
+          {% csrf_token %}
+          <script
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="pk_test_u5nWdGCYlT5YVAqnf5R38cgX"
+            data-image="https://pokemon-revolution-online.net/PRO.png"
+            data-name="Pokemon Exchange"
+            data-description="unlimited questions"
+            data-amount="1000"
+            data-locale="auto">
+          </script>
+        </form>
+        {% endif %}
+        {% if user.userprofile.profile_pic %}
+          <img class="img" src="{{ user.userprofile.profile_pic.url }}" height="220" width="220">
+        {% endif %}
+        <h4>Your current score is {{ request.user.userprofile.score }}</h4>
         <br><br>
-      {% endfor %}
+        <p><strong>API Token: </strong>{{ token }}</p>
+        <a href="{% url 'create_post' %}" class="waves-effect waves-light btn red">Create Post</a>
+      </div>
+      <div class="col m6">
+        <br><br>
+        <h4>Here is a list of all the questions you have posted:</h4>
+        {% for question in questions %}
+        <span><h5><a href="{% url 'question_detail' question.id %}">{{ question.title }}</a></h5>
+          <a href="{% url 'delete_question' question.id %}" class="waves-effect waves-light btn red">Delete Post</a></span>
+          <br><br>
+        {% endfor %}
+      </div>
     </div>
   </div>
 </div>

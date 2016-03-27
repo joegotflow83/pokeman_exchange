@@ -4,11 +4,13 @@
 
 {% block content %}
 <div class="container">
-  <h3>Questions:</h3>
-  <ul>
-  {% for question in post_list %}
-    <li><h4><a href="{% url 'question_detail' question.id %}">{{question.title}}</a></h4></li>
-  {% endfor %}
-  <ul>
+  <div class="card red lighten-4">
+    <h3>Questions:</h3>
+    <ul>
+    {% for question in post_list %}
+      <li><h4><a href="{% url 'question_detail' question.id %}">{{question.title}}</a></h4></li>
+    {% endfor %}
+    <ul>
+  </div>
 </div>
 {% endblock %}

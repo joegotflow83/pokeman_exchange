@@ -4,7 +4,9 @@
 
 {% block content %}
 <div class="container">
-  <h4>You have no more free questions, please submit payment for further questions.</h4>
-  <a href="{% url 'home' %}" class="waves-effect waves-light btn">Go Home</a>
+  <div class="card red lighten-1">
+    <h4>You have no more free questions, please submit payment for further questions.</h4>
+    <a href="{% url 'home' %}" class="waves-effect waves-light btn">Go Home</a>
+  </div>
 </div>
 {% endblock %}

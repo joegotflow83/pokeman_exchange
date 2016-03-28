@@ -30,7 +30,6 @@ psycopg2==2.6.1
 ptyprocess==0.5.1
 PyJWT==1.4.0
 python-dateutil==2.5.2
-python-social-auth==0.2.14
 python3-openid==3.0.9
 PyYAML==3.11
 requests==2.6.2

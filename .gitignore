@@ -3,3 +3,4 @@ stack_env/
 *.DS_Store
 *__pycache__/
 pokeman/db.sqlite3
+pokeman/pokeman/secret.py

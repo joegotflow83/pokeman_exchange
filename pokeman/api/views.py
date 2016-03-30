@@ -12,6 +12,10 @@ class PostListCreateAPIView(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
+    def create(self, request, *args, **kwargs):
+        request.data['user'] = request.user.pk
+        return super().create(request, *args, **kwargs)
+
 
 class PostRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
     """Allow a user to put and patch endpoint"""
@@ -42,6 +46,10 @@ class AnswerListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = AnswerSerializer
     queryset = Answer.objects.all()
     permission_classes = (IsAuthenticatedOrReadOnly,)
+
+    def create(self, request, *args, **kwargs):
+        request.data['data'] = request.user.pk
+        return super().create(request, *args, **kwargs)
 
 
 class AnswerRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):

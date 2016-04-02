@@ -93,11 +93,11 @@ REST_FRAMEWORK = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'Pokedex',
         'USER': 'Joe',
         'PASSWORD': secret_password,
-        'HOST': 'pokemon-exchange2.ckcqxwjedybj.us-east-1.rds.amazonaws.com',
+        'HOST': 'pokemon-exchange.ckcqxwjedybj.us-east-1.rds.amazonaws.com',
         'PORT': '5432',
     }
 }
